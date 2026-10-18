@@ -1,5 +1,6 @@
 package dev.chearcode.battleship;
 
+import dev.chearcode.battleship.addressconverter.AddressConverter;
 import dev.chearcode.battleship.board.Board;
 import dev.chearcode.battleship.board.Coordinates;
 import dev.chearcode.battleship.dialog.CoordinatesDialog;
@@ -24,13 +25,15 @@ public class Game {
     private final Dialog<String> emptyDialog;
     private final Shooter shooter;
     private final SunkChecker winChecker;
+    private final AddressConverter addressConverter;
 
-    public Game(Player firstPlayer, Player secondPlayer) {
+    public Game(Player firstPlayer, Player secondPlayer, AddressConverter addressConverter) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
-        this.normalBoardRenderer = new NormalBoardRenderer();
-        this.opponenetBoardRenderer = new OpponentBoardRenderer();
-        this.coordinatesDialog = new CoordinatesDialog(TITLE, ERROR_MESSAGE);
+        this.addressConverter = addressConverter;
+        this.normalBoardRenderer = new NormalBoardRenderer(addressConverter::toAddress);
+        this.opponenetBoardRenderer = new OpponentBoardRenderer(addressConverter::toAddress);
+        this.coordinatesDialog = new CoordinatesDialog(TITLE, ERROR_MESSAGE, addressConverter::toCoordinates);
         this.emptyDialog = new EmptyDialog("Введите Enter для передачи хода");
         this.shooter = new Shooter();
         this.winChecker = new SunkChecker();
@@ -101,7 +104,7 @@ public class Game {
                 throw new RuntimeException(e);
             }
             System.out.println(TITLE);
-            System.out.println(toAddress(hitCoordinates));
+            System.out.println(addressConverter.toAddress(hitCoordinates));
             return hitCoordinates;
         }
         while (true) {
@@ -111,12 +114,6 @@ public class Game {
             }
             System.out.println(ERROR_MESSAGE);
         }
-    }
-
-    private String toAddress(Coordinates hitCoordinates) {
-        String columnAddress = (char) (hitCoordinates.x() + 'A') + "";
-        String rowAddress = hitCoordinates.y() + 1 + "";
-        return columnAddress + rowAddress;
     }
 
     private boolean isValidCoordinates(Coordinates coordinates, Board board) {

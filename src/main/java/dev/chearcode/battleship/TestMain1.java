@@ -1,5 +1,7 @@
 package dev.chearcode.battleship;
 
+import dev.chearcode.battleship.addressconverter.AddressConverter;
+import dev.chearcode.battleship.addressconverter.EnAddressConverter;
 import dev.chearcode.battleship.board.Board;
 import dev.chearcode.battleship.board.Coordinates;
 import dev.chearcode.battleship.renderer.BoardRenderer;
@@ -11,8 +13,9 @@ public class TestMain1 {
     public static void main(String[] args) {
         System.out.println("Капитан на мостике!");
 
-        BoardRenderer renderer = new NormalBoardRenderer();
-        BoardRenderer opponentBoardRenderer = new OpponentBoardRenderer();
+        AddressConverter addressConverter = new EnAddressConverter();
+        BoardRenderer renderer = new NormalBoardRenderer(addressConverter::toAddress);
+        BoardRenderer opponentBoardRenderer = new OpponentBoardRenderer(addressConverter::toAddress);
 
         Board board = new Board();
 

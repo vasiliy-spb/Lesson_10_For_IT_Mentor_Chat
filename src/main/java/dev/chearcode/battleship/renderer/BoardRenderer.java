@@ -1,11 +1,15 @@
 package dev.chearcode.battleship.renderer;
 
-import dev.chearcode.battleship.board.BoardUtils;
 import dev.chearcode.battleship.board.Board;
+import dev.chearcode.battleship.board.BoardUtils;
 import dev.chearcode.battleship.board.Coordinates;
 import dev.chearcode.battleship.unit.Miss;
 import dev.chearcode.battleship.unit.Ship;
 import dev.chearcode.battleship.unit.Unit;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public abstract class BoardRenderer {
     protected static final String BACKGROUND = "🔹";
@@ -13,10 +17,15 @@ public abstract class BoardRenderer {
     protected static final String NORMAL_SECTION = "🟩";
     protected static final String HIT_SECTION = "🟧";
     protected static final String SUNK_SHIP = "🟥";
+    private final Function<Coordinates, String> mapper;
+
+    public BoardRenderer(Function<Coordinates, String> mapper) {
+        this.mapper = mapper;
+    }
 
     public void render(Board board) {
         int size = board.getSize();
-        printTopAddressLine();
+        printTopAddressLine(board);
         int numAddress = 1;
         for (int y = 0; y < size; y++) {
             System.out.printf("%2d ", numAddress);
@@ -41,8 +50,23 @@ public abstract class BoardRenderer {
 //    }
 
     // For Mac os
-    private void printTopAddressLine() {
-        System.out.print("   A  B C D E F G  H I J");
+    private void printTopAddressLine(Board board) {
+//        System.out.print("   A  B C D E F G  H I J");
+//        System.out.println();
+
+        int size = board.getSize();
+        List<String> columnAdresses = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            Coordinates coordinates = new Coordinates(i, i);
+            String address = mapper.apply(coordinates);
+            columnAdresses.add(address.charAt(0) + " ");
+            if (i == 0 || i == 6) {
+                columnAdresses.add(" ");
+            }
+        }
+
+        System.out.print("   ");
+        columnAdresses.forEach(System.out::print);
         System.out.println();
     }
 

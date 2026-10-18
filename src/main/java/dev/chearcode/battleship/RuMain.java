@@ -1,0 +1,23 @@
+package dev.chearcode.battleship;
+
+import dev.chearcode.battleship.addressconverter.EnAddressConverter;
+import dev.chearcode.battleship.addressconverter.RuAddressConverter;
+import dev.chearcode.battleship.board.Board;
+import dev.chearcode.battleship.factory.FirstBoardFactory;
+import dev.chearcode.battleship.factory.SecondBoardFactory;
+import dev.chearcode.battleship.player.Player;
+import dev.chearcode.battleship.player.RealPlayer;
+
+public class RuMain {
+    public static void main(String[] args) {
+        Board firstBoard = new FirstBoardFactory().get();
+        Board secondBoard = new SecondBoardFactory().get();
+
+        Player firstPlayer = new RealPlayer("Игрок 1", firstBoard);
+        Player secondPlayer = new RealPlayer("Игрок 2", secondBoard);
+        Game game = new Game(firstPlayer, secondPlayer, new RuAddressConverter());
+
+        game.start();
+
+    }
+}

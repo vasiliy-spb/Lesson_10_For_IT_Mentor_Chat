@@ -1,5 +1,6 @@
 package dev.chearcode.battleship;
 
+import dev.chearcode.battleship.addressconverter.EnAddressConverter;
 import dev.chearcode.battleship.board.Board;
 import dev.chearcode.battleship.factory.FirstBoardFactory;
 import dev.chearcode.battleship.factory.SecondBoardFactory;
@@ -13,7 +14,7 @@ public class Main {
 
         Player firstPlayer = new RealPlayer("Игрок 1", firstBoard);
         Player secondPlayer = new RealPlayer("Игрок 2", secondBoard);
-        Game game = new Game(firstPlayer, secondPlayer);
+        Game game = new Game(firstPlayer, secondPlayer, new EnAddressConverter());
 
         game.start();
 
