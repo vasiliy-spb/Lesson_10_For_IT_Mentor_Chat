@@ -1,19 +1,19 @@
-package dev.chearcode.battleship;
+package dev.chearcode.battleship.renderer;
 
+import dev.chearcode.battleship.board.BoardUtils;
 import dev.chearcode.battleship.board.Board;
 import dev.chearcode.battleship.board.Coordinates;
 import dev.chearcode.battleship.unit.Miss;
 import dev.chearcode.battleship.unit.Ship;
 import dev.chearcode.battleship.unit.Unit;
 
-public class NormalBoardRenderer implements BoardRenderer {
+public abstract class BoardRenderer {
     protected static final String BACKGROUND = "🔹";
     protected static final String MISS = "🔻";
     protected static final String NORMAL_SECTION = "🟩";
     protected static final String HIT_SECTION = "🟧";
     protected static final String SUNK_SHIP = "🟥";
 
-    @Override
     public void render(Board board) {
         int size = board.getSize();
         printTopAddressLine();
@@ -66,7 +66,5 @@ public class NormalBoardRenderer implements BoardRenderer {
         throw new IllegalArgumentException("Unexpected unit: " + unit);
     }
 
-    protected String getNormalSectionSprite() {
-        return NORMAL_SECTION;
-    }
+    protected abstract String getNormalSectionSprite();
 }

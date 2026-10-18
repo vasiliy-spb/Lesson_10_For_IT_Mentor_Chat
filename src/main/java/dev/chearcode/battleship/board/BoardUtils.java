@@ -1,7 +1,5 @@
-package dev.chearcode.battleship;
+package dev.chearcode.battleship.board;
 
-import dev.chearcode.battleship.board.Board;
-import dev.chearcode.battleship.board.Coordinates;
 import dev.chearcode.battleship.unit.Ship;
 
 import java.util.List;

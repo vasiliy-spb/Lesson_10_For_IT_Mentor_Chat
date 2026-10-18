@@ -80,4 +80,8 @@ public class Board {
         HORIZONTAL,
         VERTICAL;
     }
+
+    public Map<Coordinates, Unit> toMap() {
+        return Map.copyOf(units);
+    }
 }

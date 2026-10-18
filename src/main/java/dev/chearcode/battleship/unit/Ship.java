@@ -1,11 +1,16 @@
 package dev.chearcode.battleship.unit;
 
-public class Ship implements Unit {
+public abstract class Ship implements Unit {
     private Section[] body;
 
     public Ship(int length) {
         initBody(length);
     }
+
+    // Вариант 1 (дескрипторы классов)
+//    public Ship(ShipType shipType) {
+//        this(shipType.getSize());
+//    }
 
     private void initBody(int length) {
         body = new Section[length];
@@ -34,4 +39,22 @@ public class Ship implements Unit {
     public int length() {
         return body.length;
     }
+
+    // Вариант 1 (дескрипторы классов)
+    // Java Эффективное программирование (глава 4.9)
+//    public enum ShipType {
+//        MOTORBOAT(1),
+//        DESTROYER(2),
+//        CRUISER(3),
+//        BATTLESHIP(4);
+//        private final int size;
+//
+//        ShipType(int size) {
+//            this.size = size;
+//        }
+//
+//        public int getSize() {
+//            return size;
+//        }
+//    }
 }
